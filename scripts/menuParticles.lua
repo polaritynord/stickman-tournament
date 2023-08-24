@@ -11,7 +11,7 @@ function menuParticles:update(delta)
         --Fade away
         v.color[4] = v.color[4] - 2 * delta
         --Shrink
-        v.radius = v.radius - 10 * delta
+        v.size = v.size - 10 * delta
         --Despawn
         if v.color[4] < 0 then
             table.remove(self.particles, i)
@@ -23,12 +23,12 @@ function menuParticles:update(delta)
     self.timer = self.timer + delta
     if self.timer < particleSpawnCooldown then return end
     self.timer = 0
-    
+
     --Spawn new particle
     for _ = 1, 500*delta do
         local particle = {
-            position = {math.uniform(20, 940), 540};
-            radius = 5;
+            position = {math.uniform(20, 940), 535};
+            size = 5;
             color = {0, 0, 0, 1};
         }
         --Define color based on the location at screen (blue to red)
@@ -42,7 +42,7 @@ function menuParticles:draw()
     --Draw existing particles
     for i, v in ipairs(self.particles) do
         love.graphics.setColor(v.color)
-        love.graphics.circle("fill", v.position[1], v.position[2], v.radius)
+        love.graphics.rectangle("fill", v.position[1], v.position[2], v.size, v.size)
     end
 end
 
