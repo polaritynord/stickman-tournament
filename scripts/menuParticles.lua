@@ -6,7 +6,7 @@ local menuParticles = {
 function menuParticles:update(delta)
     --Update existing particles
     for i, v in ipairs(self.particles) do
-        --Move up
+        --Move up or down
         v.position[2] = v.position[2] - 300 * delta
         --Fade away
         v.color[4] = v.color[4] - 2 * delta
@@ -24,19 +24,16 @@ function menuParticles:update(delta)
     if self.timer < particleSpawnCooldown then return end
     self.timer = 0
     
-    --Spawn new particle:
-    --Determine the amount to generate by the current framerate
-    local framerate = 1/delta
-    local i = math.ceil(60/framerate)
-    for _ = 1, i, 1 do
+    --Spawn new particle
+    for _ = 1, 500*delta do
         local particle = {
             position = {math.uniform(20, 940), 540};
             radius = 5;
-            color = {1, 1, 1, 1};
+            color = {0, 0, 0, 1};
         }
         --Define color based on the location at screen (blue to red)
-        print(particle.position[1]-460)
-        --particle.color[1] = particle.position[1]-460
+        particle.color[1] = math.abs(particle.position[1]-480)/480
+        particle.color[3] = 1-particle.color[1]
         self.particles[#self.particles+1] = particle
     end
 end
