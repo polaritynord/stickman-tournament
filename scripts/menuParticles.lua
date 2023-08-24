@@ -40,8 +40,8 @@ end
 
 function menuParticles:draw()
     --Draw existing particles
-    for i, v in ipairs(self.particles) do
-        love.graphics.setColor(v.color)
+    for _, v in ipairs(self.particles) do
+        love.graphics.setColor(v.color[1], v.color[2], v.color[3], v.color[4]*Interface.menuAlpha)
         love.graphics.rectangle("fill", v.position[1], v.position[2], v.size, v.size)
     end
 end
