@@ -45,7 +45,7 @@ function interface:updateMenu(delta)
         --Tournament intro phases timer
         self.menuExpTimer = self.menuExpTimer + delta
         --Launch first game introduction screen
-        if math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
+        if true then--math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
             GameState = "gameIntro1"
             self.introCountDown = 5
         end
@@ -114,7 +114,10 @@ end
 --Pong intro
 function interface:updateGameIntroTitle(delta)
     if not string.find(GameState, "gameIntro") then return end
-    self.introCountDown = self.introCountDown - delta
+    self.introCountDown = self.introCountDown - delta*7
+    if self.introCountDown < 0 then
+        GameState = "game1"
+    end
 end
 
 function interface:drawPongIntro()
@@ -128,7 +131,7 @@ function interface:drawPongIntro()
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.setFont(self.assets.fontSmall)
     love.graphics.printf(
-        "First player to get to 3 points wins! P.S the ball speeds up over time lol", -19, 300, 1000, "center"
+        "First player to get to 3 points wins! P.S the paddles shrink over time lol", -19, 300, 1000, "center"
     )
 end
 

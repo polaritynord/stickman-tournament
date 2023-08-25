@@ -1,5 +1,6 @@
 --Import scripts
 local menuParticles = require "scripts.menuParticles"
+local pongGame = require "scripts.pongGame"
 Interface = require "scripts.interface"
 InputManager = require "scripts.inputManager"
 
@@ -48,6 +49,8 @@ function love.update(delta)
     --Main menu
     if GameState == "menu" then
         menuParticles:update(delta)
+    elseif GameState == "game1" then
+        pongGame:update(delta)
     end
 end
 
@@ -64,6 +67,8 @@ function love.draw()
     love.graphics.translate(GameCamera[1], GameCamera[2])
     if GameState == "menu" then
         menuParticles:draw()
+    elseif GameState == "game1" then
+        pongGame:draw()
     end
     --Menu canvas
     Interface:draw()
