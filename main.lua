@@ -30,6 +30,7 @@ end
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
+    love.mouse.setVisible(false)
     --Load function for scripts
     Interface:load()
     InputManager:load()
@@ -38,6 +39,7 @@ function love.load()
     GamePaused = true
     GameCamera = {0, 0, 1}
     MenuCamera = {0, 0, 1}
+    Scores = {0, 0}
 end
 
 function love.update(delta)
@@ -55,7 +57,8 @@ function love.draw()
     --Set background color
     if GameState == "menu" then
         love.graphics.setBackgroundColor(0.85*Interface.menuAlpha, 0.85*Interface.menuAlpha, 0.85*Interface.menuAlpha)
-    else
+    elseif string.find(GameState, "gameIntro") then
+        love.graphics.setBackgroundColor(0.85, 0.85, 0.85)
     end
     --Game canvas
     love.graphics.translate(GameCamera[1], GameCamera[2])
