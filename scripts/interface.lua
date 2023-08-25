@@ -116,7 +116,11 @@ function interface:updateGameIntroTitle(delta)
     if not string.find(GameState, "gameIntro") then return end
     self.introCountDown = self.introCountDown - delta*7
     if self.introCountDown < 0 then
-        GameState = "game1"
+        local i = tonumber(string.sub(GameState, 10, 10))
+        GameState = "game" .. i
+        if i == 1 then
+            PongGame:load()
+        end
     end
 end
 

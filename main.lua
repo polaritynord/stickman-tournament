@@ -1,6 +1,6 @@
 --Import scripts
 local menuParticles = require "scripts.menuParticles"
-local pongGame = require "scripts.pongGame"
+PongGame = require "scripts.pongGame"
 Interface = require "scripts.interface"
 InputManager = require "scripts.inputManager"
 
@@ -22,10 +22,6 @@ function love.keypressed(key)
         if not fullscreen and false then
             love.window.setMode(960, 540, {resizable=true})
         end
-    end
-    -- Toggle debug menu
-    if key == "f1" and GameState == "game" then
-        Interface.debug.enabled = not Interface.debug.enabled
     end
 end
 
@@ -50,7 +46,7 @@ function love.update(delta)
     if GameState == "menu" then
         menuParticles:update(delta)
     elseif GameState == "game1" then
-        pongGame:update(delta)
+        PongGame:update(delta)
     end
 end
 
@@ -68,7 +64,7 @@ function love.draw()
     if GameState == "menu" then
         menuParticles:draw()
     elseif GameState == "game1" then
-        pongGame:draw()
+        PongGame:draw()
     end
     --Menu canvas
     Interface:draw()
