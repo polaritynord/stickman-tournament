@@ -1,25 +1,25 @@
-local joystickManager = {
+local InputManager = {
 
 }
 
 function love.joystickadded(joystick)
     --Connect joystick
-    if JoystickManager.gamepads[1] then
+    if InputManager.gamepads[1] then
         --Connect player 2
-        JoystickManager.gamepads[2] = joystick
+        InputManager.gamepads[2] = joystick
     else
         --Connect player 1
-        JoystickManager.gamepads[1] = joystick
+        InputManager.gamepads[1] = joystick
     end
 end
 
-function joystickManager:load()
+function InputManager:load()
     self.gamepads = {nil, nil}
     self.gamepadsConnected = false
 end
 
-function joystickManager:update()
+function InputManager:update()
     self.gamepadsConnected = self.gamepads[1] ~= nil and self.gamepads[2] ~= nil
 end
 
-return joystickManager
+return InputManager

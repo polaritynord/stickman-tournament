@@ -1,7 +1,7 @@
 --Import scripts
 local menuParticles = require "scripts.menuParticles"
 Interface = require "scripts.interface"
-JoystickManager = require "scripts.joystickManager"
+InputManager = require "scripts.inputManager"
 
 --Variables
 local fullscreen = false
@@ -32,7 +32,7 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     --Load function for scripts
     Interface:load()
-    JoystickManager:load()
+    InputManager:load()
     --Global variables
     GameState = "menu"
     GamePaused = true
@@ -41,7 +41,7 @@ function love.load()
 end
 
 function love.update(delta)
-    JoystickManager:update()
+    InputManager:update()
     Interface:update(delta)
     --Main menu
     if GameState == "menu" then
