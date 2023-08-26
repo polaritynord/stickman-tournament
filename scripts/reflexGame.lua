@@ -7,12 +7,20 @@ function reflexGame:load()
     self.scores = {0, 0}
     self.done = false
     self.doneTime = 0
-    self.gameComplete = true
+    self.gameComplete = false
+    self.doneTimer = 0
 end
 
 function reflexGame:update(delta)
     --Increment timer
     self.timer = self.timer + delta
+    --Game over stuff
+    if self.gameComplete and self.doneTimer > 2.5 then
+        GameState = "gameIntro3"
+        Interface.introCountDown = 5
+    end
+    if self.gameComplete then self.doneTimer = self.doneTimer + delta end
+    if self.gameComplete then return end
     if self.clickTimes[1] < 0 or self.clickTimes[2] < 0 then
         --Check for clicks:
         --P1

@@ -7,6 +7,7 @@ function interface:load()
         menuLogo = love.graphics.newImage("images/menu_logo.png");
         pongIcon = love.graphics.newImage("images/icon_pong.png");
         reflexIcon = love.graphics.newImage("images/icon_reflex.png");
+        duckIcon = love.graphics.newImage("images/icon_duck.png");
         blueGuy = love.graphics.newImage("images/blueguy.png");
         redGuy = love.graphics.newImage("images/redguy.png");
         --Fonts
@@ -20,7 +21,7 @@ function interface:load()
     self.titleTexts = {
         "PING-PONG",
         "REFLEX CLICK",
-        "CAR RACE",
+        "RUBBER DUCKS",
         "FAST FINGERS",
         "TANK DUEL"
     }
@@ -47,7 +48,7 @@ function interface:updateMenu(delta)
         self.menuExpTimer = self.menuExpTimer + delta
         --Launch first game introduction screen
         if true then--math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
-            GameState = "gameIntro2"
+            GameState = "gameIntro3"
             self.introCountDown = 5
         end
     end
@@ -59,6 +60,7 @@ function interface:drawMenu()
     love.graphics.setFont(self.assets.fontSmall)
     love.graphics.setColor(0.1, 0.1, 0.1, self.menuAlpha)
     love.graphics.print("Made by Zerpnord for the SOFA Jam", 2, 3)
+    love.graphics.print("Press F11 to toggle fullscreen", 2, 27)
     --Logo
     love.graphics.setColor(1, 1, 1, self.menuAlpha)
     love.graphics.draw(
@@ -121,8 +123,10 @@ function interface:updateGameIntroTitle(delta)
         GameState = "game" .. i
         if i == 1 then
             PongGame:load()
-        else
+        elseif i == 2 then
             ReflexGame:load()
+        else
+            DuckGame:load()
         end
     end
 end
@@ -154,6 +158,21 @@ function interface:drawReflexIntro()
     love.graphics.setFont(self.assets.fontSmall)
     love.graphics.printf(
         "Press A or Cross Button when the cube pops up!\nFastest to click wins!", -19, 300, 1000, "center"
+    )
+end
+
+function interface:drawDuckIntro()
+    if GameState ~= "gameIntro3" then return end
+    --Icon
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(
+        self.assets.duckIcon, 480, 220, 0, 4, 4, 16, 16
+    )
+    --Description
+    love.graphics.setColor(0.1, 0.1, 0.1, 1)
+    love.graphics.setFont(self.assets.fontSmall)
+    love.graphics.printf(
+        "Guess which color has the most rubber ducks!\nUse arrow buttons to choose!", -19, 300, 1000, "center"
     )
 end
 
@@ -202,6 +221,7 @@ function interface:draw()
     self:drawMenu()
     self:drawPongIntro()
     self:drawReflexIntro()
+    self:drawDuckIntro()
     self:drawGameIntroTitle()
 end
 

@@ -150,7 +150,7 @@ function pongGame:load()
         image = love.graphics.newImage("images/ball.png");
     }
     self.startTimer = 0
-    self.scores = {2, 2}
+    self.scores = {0, 0}
     self.gameComplete = false
 end
 
