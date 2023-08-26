@@ -6,6 +6,7 @@ function interface:load()
         --Images
         menuLogo = love.graphics.newImage("images/menu_logo.png");
         pongIcon = love.graphics.newImage("images/icon_pong.png");
+        reflexIcon = love.graphics.newImage("images/icon_reflex.png");
         blueGuy = love.graphics.newImage("images/blueguy.png");
         redGuy = love.graphics.newImage("images/redguy.png");
         --Fonts
@@ -46,7 +47,7 @@ function interface:updateMenu(delta)
         self.menuExpTimer = self.menuExpTimer + delta
         --Launch first game introduction screen
         if true then--math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
-            GameState = "gameIntro1"
+            GameState = "gameIntro2"
             self.introCountDown = 5
         end
     end
@@ -120,6 +121,8 @@ function interface:updateGameIntroTitle(delta)
         GameState = "game" .. i
         if i == 1 then
             PongGame:load()
+        else
+            ReflexGame:load()
         end
     end
 end
@@ -143,9 +146,9 @@ function interface:drawReflexIntro()
     if GameState ~= "gameIntro2" then return end
     --Icon
     love.graphics.setColor(1, 1, 1, 1)
-    --love.graphics.draw(
-    --    self.assets.pongIcon, 480, 220, 0, 4, 4, 16, 16
-    --)
+    love.graphics.draw(
+        self.assets.reflexIcon, 480, 220, 0, 4, 4, 16, 16
+    )
     --Description
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.setFont(self.assets.fontSmall)
