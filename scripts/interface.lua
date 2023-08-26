@@ -114,7 +114,7 @@ end
 --Pong intro
 function interface:updateGameIntroTitle(delta)
     if not string.find(GameState, "gameIntro") then return end
-    self.introCountDown = self.introCountDown - delta*7
+    self.introCountDown = self.introCountDown - delta
     if self.introCountDown < 0 then
         local i = tonumber(string.sub(GameState, 10, 10))
         GameState = "game" .. i
@@ -135,11 +135,26 @@ function interface:drawPongIntro()
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.setFont(self.assets.fontSmall)
     love.graphics.printf(
-        "First player to get to 3 points wins! P.S the paddles shrink over time lol", -19, 300, 1000, "center"
+        "First player to get to 3 points wins! Use left stick to navigate paddles!\nP.S it gets harder over time :p", -19, 300, 1000, "center"
     )
 end
 
---Main game intro stuff
+function interface:drawReflexIntro()
+    if GameState ~= "gameIntro2" then return end
+    --Icon
+    love.graphics.setColor(1, 1, 1, 1)
+    --love.graphics.draw(
+    --    self.assets.pongIcon, 480, 220, 0, 4, 4, 16, 16
+    --)
+    --Description
+    love.graphics.setColor(0.1, 0.1, 0.1, 1)
+    love.graphics.setFont(self.assets.fontSmall)
+    love.graphics.printf(
+        "Press A or Cross Button when the cube pops up!\nFastest to click wins!", -19, 300, 1000, "center"
+    )
+end
+
+--Game intro stuff
 function interface:drawGameIntroTitle()
     if not string.find(GameState, "gameIntro") then return end
     local i = tonumber(string.sub(GameState, 10, 10))
@@ -183,6 +198,7 @@ end
 function interface:draw()
     self:drawMenu()
     self:drawPongIntro()
+    self:drawReflexIntro()
     self:drawGameIntroTitle()
 end
 

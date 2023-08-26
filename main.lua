@@ -33,7 +33,7 @@ function love.load()
     InputManager:load()
     --Global variables
     GameState = "menu"
-    GamePaused = true
+    GamePaused = false
     GameCamera = {0, 0, 1}
     MenuCamera = {0, 0, 1}
     Scores = {0, 0}
@@ -41,6 +41,7 @@ end
 
 function love.update(delta)
     InputManager:update()
+    if GamePaused then return end
     Interface:update(delta)
     --Main menu
     if GameState == "menu" then
@@ -68,4 +69,11 @@ function love.draw()
     end
     --Menu canvas
     Interface:draw()
+    --Controller disconnected warning
+    if not GamePaused then return end
+    love.graphics.setFont(Interface.assets.fontLarge)
+    love.graphics.setColor(0.8, 0, 0, 1)
+    love.graphics.printf(
+        "Controller Disconnected!", -19, 300, 1000, "center"
+    )
 end

@@ -116,6 +116,11 @@ function pongGame:ballMovement(delta)
         self.startTimer = 0
         self.paddles = {{15, 270, 160}, {945, 270, 160}}
         self.ball.speed = 200
+        --Check for win
+        if self.scores[2] > 2 then
+            self.gameComplete = true
+            Scores[2] = Scores[2] + 1
+        end
     end
     --P2 side
     if self.ball.position[1] > 960 then
@@ -125,6 +130,11 @@ function pongGame:ballMovement(delta)
         self.startTimer = 0
         self.paddles = {{15, 270, 160}, {945, 270, 160}}
         self.ball.speed = 200
+        --Check for win
+        if self.scores[1] > 2 then
+            self.gameComplete = true
+            Scores[1] = Scores[1] + 1
+        end
     end
 end
 
@@ -140,12 +150,19 @@ function pongGame:load()
         image = love.graphics.newImage("images/ball.png");
     }
     self.startTimer = 0
-    self.scores = {0, 0}
+    self.scores = {2, 2}
+    self.gameComplete = false
 end
 
 function pongGame:update(delta)
     self.startTimer = self.startTimer + delta
-    if self.startTimer < 2 then return end
+    --Game over stuff
+    if self.gameComplete and self.startTimer > 2.5 then
+        GameState = "gameIntro2"
+        Interface.introCountDown = 5
+    end
+    --Game funcs
+    if self.startTimer < 2 or self.gameComplete then return end
     self:paddleControls(delta)
     self:ballMovement(delta)
 end
@@ -170,13 +187,27 @@ function pongGame:draw()
         self.ball.image, self.ball.position[1], self.ball.position[2], 0, 2, 2, 5, 5
     )
     --Draw score bg
-    love.graphics.setColor(0.2, 0.2, 0.2, 1)
+    love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
     love.graphics.rectangle("fill", 430, 490, 100, 50)
     --Draw score text
-    love.graphics.setColor(0.6, 0.6, 0.6, 1)
+    love.graphics.setColor(0.8, 0.8, 0.8, 1)
     love.graphics.setFont(Interface.assets.fontMedium)
     love.graphics.print(
         self.scores[1] .. "   " .. self.scores[2], 450, 500
+    )
+    --Game complete text
+    if not self.gameComplete then return end
+    local text
+    if self.scores[1] > 2 then
+        text = "PLAYER 1 WINS!"
+        love.graphics.setColor(0, 0, 0.8, 1)
+    else
+        text = "PLAYER 2 WINS!"
+        love.graphics.setColor(0.8, 0, 0, 1)
+    end
+    love.graphics.setFont(Interface.assets.fontLarge)
+    love.graphics.printf(
+        text, -19, 300, 1000, "center"
     )
 end
 
