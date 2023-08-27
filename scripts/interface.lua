@@ -7,6 +7,7 @@ function interface:load()
         menuLogo = love.graphics.newImage("images/menu_logo.png");
         pongIcon = love.graphics.newImage("images/icon_pong.png");
         reflexIcon = love.graphics.newImage("images/icon_reflex.png");
+        fingerIcon = love.graphics.newImage("images/icon_finger.png");
         duckIcon = love.graphics.newImage("images/icon_duck.png");
         blueGuy = love.graphics.newImage("images/blueguy.png");
         redGuy = love.graphics.newImage("images/redguy.png");
@@ -48,7 +49,7 @@ function interface:updateMenu(delta)
         self.menuExpTimer = self.menuExpTimer + delta
         --Launch first game introduction screen
         if true then--math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
-            GameState = "gameIntro3"
+            GameState = "gameIntro4"
             self.introCountDown = 5
         end
     end
@@ -125,8 +126,10 @@ function interface:updateGameIntroTitle(delta)
             PongGame:load()
         elseif i == 2 then
             ReflexGame:load()
-        else
+        elseif i == 3 then
             DuckGame:load()
+        else
+            FingerGame:load()
         end
     end
 end
@@ -176,6 +179,21 @@ function interface:drawDuckIntro()
     )
 end
 
+function interface:drawFingerIntro()
+    if GameState ~= "gameIntro4" then return end
+    --Icon
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(
+        self.assets.fingerIcon, 480, 220, 0, 4, 4, 16, 16
+    )
+    --Description
+    love.graphics.setColor(0.1, 0.1, 0.1, 1)
+    love.graphics.setFont(self.assets.fontSmall)
+    love.graphics.printf(
+        "Click as fast as you can to win!\nUse the A or Cross Button", -19, 300, 1000, "center"
+    )
+end
+
 --Game intro stuff
 function interface:drawGameIntroTitle()
     if not string.find(GameState, "gameIntro") then return end
@@ -222,6 +240,7 @@ function interface:draw()
     self:drawPongIntro()
     self:drawReflexIntro()
     self:drawDuckIntro()
+    self:drawFingerIntro()
     self:drawGameIntroTitle()
 end
 

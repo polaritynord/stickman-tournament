@@ -3,6 +3,7 @@ local menuParticles = require "scripts.menuParticles"
 PongGame = require "scripts.pongGame"
 ReflexGame = require "scripts.reflexGame"
 DuckGame = require "scripts.DuckGame"
+FingerGame = require "scripts.fingerGame"
 Interface = require "scripts.interface"
 InputManager = require "scripts.inputManager"
 
@@ -54,6 +55,8 @@ function love.update(delta)
         ReflexGame:update(delta)
     elseif GameState == "game3" then
         DuckGame:update(delta)
+    elseif GameState == "game4" then
+        FingerGame:update(delta)
     end
 end
 
@@ -76,6 +79,8 @@ function love.draw()
         ReflexGame:draw()
     elseif GameState == "game3" then
         DuckGame:draw()
+    elseif GameState == "game4" then
+        FingerGame:draw()
     end
     --Menu canvas
     Interface:draw()
