@@ -198,11 +198,13 @@ end
 function interface:drawGameIntroTitle()
     if not string.find(GameState, "gameIntro") then return end
     local i = tonumber(string.sub(GameState, 10, 10))
+    local text = "GAME" .. i
+    if i == 5 then text = "FINAL GAME" end
     --Game #
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.setFont(self.assets.fontLarge)
     love.graphics.printf(
-        "GAME " .. i, -19, 60, 1000, "center"
+        text, -19, 60, 1000, "center"
     )
     --Game title
     love.graphics.setFont(self.assets.fontMedium)
