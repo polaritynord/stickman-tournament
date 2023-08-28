@@ -66,7 +66,7 @@ function love.draw()
     --Set background color
     if GameState == "menu" then
         love.graphics.setBackgroundColor(0.85*Interface.menuAlpha, 0.85*Interface.menuAlpha, 0.85*Interface.menuAlpha)
-    elseif string.find(GameState, "gameIntro") then
+    elseif string.find(GameState, "gameIntro") or GameState == "ending" then
         love.graphics.setBackgroundColor(0.85, 0.85, 0.85)
     end
     --Game canvas

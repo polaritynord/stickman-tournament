@@ -13,8 +13,8 @@ function fingerGame:update(delta)
     self.startTimer = self.startTimer - delta
     --Game over stuff
     if self.gameComplete and self.startTimer < 0.5 then
-        GameState = "gameIntro5"
-        Interface.introCountDown = 5
+        GameState = "ending"
+        Interface.endTimer = 0
     end
     if self.gameComplete or self.startTimer > 0 then return end
     --Clicking:

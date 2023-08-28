@@ -48,8 +48,8 @@ function interface:updateMenu(delta)
         --Tournament intro phases timer
         self.menuExpTimer = self.menuExpTimer + delta
         --Launch first game introduction screen
-        if true then--math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
-            GameState = "gameIntro4"
+        if math.abs(math.ceil(10.7-self.menuExpTimer)) < 1 then
+            GameState = "gameIntro1"
             self.introCountDown = 5
         end
     end
@@ -98,7 +98,7 @@ function interface:drawMenu()
     if self.menuExpTimer > 1.3 then
         love.graphics.setColor(1, 1, 1, self.menuExpTimer-1.3)
         love.graphics.printf(
-            "You will play 5 mini-games: each with one to win.", -19, 60, 1000, "center"
+            "You will play 4 mini-games: each with one to win.", -19, 60, 1000, "center"
         )
     end
     if self.menuExpTimer > 4 then
@@ -132,6 +132,42 @@ function interface:updateGameIntroTitle(delta)
             FingerGame:load()
         end
     end
+end
+
+function interface:drawEnding()
+    if GameState ~= "ending" then return end
+    Scores[2] = 4
+    local text, state
+    if Scores[1] > Scores[2] then
+        love.graphics.setColor(0, 0, 0.8, 1)
+        text = "PLAYER 1 IS THE CHAMPION!"
+        state = 1
+    elseif Scores[2] > Scores[1] then
+        love.graphics.setColor(0.8, 0, 0, 1)
+        text = "PLAYER 2 IS THE CHAMPION!"
+        state = 2
+    else
+        love.graphics.setColor(0.1, 0.1, 0.1, 1)
+        text = "IT'S A DRAW!"
+        state = 3
+    end
+
+    if state ~= 3 then
+       local img = Interface.assets.blueGuy
+       if state == 2 then img = Interface.assets.redGuy end
+
+       love.graphics.draw(
+            img, 480, 200, 0, 8, 8, 7, 11
+       )
+    end
+    love.graphics.setFont(self.assets.fontLarge)
+    love.graphics.printf(
+        text, -19, 300, 1000, "center"
+    )
+    love.graphics.setFont(self.assets.fontMedium)
+    love.graphics.printf(
+        Scores[1] .. " - " .. Scores[2], -19, 350, 1000, "center"
+    )
 end
 
 function interface:drawPongIntro()
@@ -199,7 +235,7 @@ function interface:drawGameIntroTitle()
     if not string.find(GameState, "gameIntro") then return end
     local i = tonumber(string.sub(GameState, 10, 10))
     local text = "GAME" .. i
-    if i == 5 then text = "FINAL GAME" end
+    if i == 4 then text = "FINAL GAME" end
     --Game #
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.setFont(self.assets.fontLarge)
@@ -244,6 +280,7 @@ function interface:draw()
     self:drawDuckIntro()
     self:drawFingerIntro()
     self:drawGameIntroTitle()
+    self:drawEnding()
 end
 
 return interface

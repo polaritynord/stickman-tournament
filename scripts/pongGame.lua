@@ -173,12 +173,13 @@ function pongGame:draw()
     love.graphics.setLineWidth(5)
     lineStipple(480, -14, 480, 547, 15, 7)
     --Draw paddles:
-    love.graphics.setColor(0.1, 0.1, 0.1, 1)
+    love.graphics.setColor(0, 0, 0.8, 1)
     --P1
     love.graphics.rectangle(
         "fill", self.paddles[1][1]-5, self.paddles[1][2]-self.paddles[1][3]/2, 10, self.paddles[2][3]
     )
     --P2
+    love.graphics.setColor(0.8, 0, 0, 1)
     love.graphics.rectangle(
         "fill", self.paddles[2][1]-5, self.paddles[2][2]-self.paddles[2][3]/2, 10, self.paddles[2][3]
     )
