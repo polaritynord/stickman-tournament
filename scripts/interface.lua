@@ -136,7 +136,6 @@ end
 
 function interface:drawEnding()
     if GameState ~= "ending" then return end
-    Scores[2] = 4
     local text, state
     if Scores[1] > Scores[2] then
         love.graphics.setColor(0, 0, 0.8, 1)
